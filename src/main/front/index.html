@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SkyPass – Voos diretos e com conexão</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="#" class="logo">
+        <span class="logo-sky">Sky</span><span class="logo-pass">Flow</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#">Voos</a></li>
+        <li><a href="#">Check-in</a></li>
+        <li><a href="#">Minha reserva</a></li>
+        <li><a href="#">Avaliações</a></li>
+      </ul>
+
+      <button class="theme-toggle" id="themeToggle" title="Alternar tema">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/>
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-content">
+      <h1 class="hero-title">Para onde você vai?</h1>
+      <p class="hero-subtitle">Voos diretos e com conexão para todo o Brasil</p>
+    </div>
+  </header>
+
+  <!-- SEARCH CARD -->
+  <main class="main">
+    <div class="search-card">
+
+      <!-- TABS -->
+      <div class="tabs" role="tablist">
+        <button class="tab active" role="tab" aria-selected="true">Ida e volta</button>
+        <button class="tab" role="tab" aria-selected="false">Somente ida</button>
+        <button class="tab" role="tab" aria-selected="false">Multitrecho</button>
+      </div>
+
+      <!-- FORM -->
+      <div class="form-grid">
+
+        <!-- Origem -->
+        <div class="field field--origem">
+          <label class="field-label">
+            <svg class="field-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.93a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7a2 2 0 0 1 1.72 2z"/>
+            </svg>
+            ORIGEM
+          </label>
+          <input class="field-input" type="text" value="São Paulo (GRU)" placeholder="Cidade de origem" />
+        </div>
+
+        <!-- Swap button -->
+        <button class="swap-btn" title="Inverter origem e destino">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M7 16V4m0 0L3 8m4-4l4 4"/>
+            <path d="M17 8v12m0 0l4-4m-4 4l-4-4"/>
+          </svg>
+        </button>
+
+        <!-- Destino -->
+        <div class="field field--destino">
+          <label class="field-label">
+            <svg class="field-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.93a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7a2 2 0 0 1 1.72 2z"/>
+            </svg>
+            DESTINO
+          </label>
+          <input class="field-input" type="text" value="Rio de Janeiro (GIG)" placeholder="Cidade de destino" />
+        </div>
+
+        <!-- Data IDA -->
+        <div class="field field--ida">
+          <label class="field-label">
+            <svg class="field-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+              <line x1="16" y1="2" x2="16" y2="6"/>
+              <line x1="8" y1="2" x2="8" y2="6"/>
+              <line x1="3" y1="10" x2="21" y2="10"/>
+            </svg>
+            IDA
+          </label>
+          <input class="field-input" type="text" value="12/06/2025" placeholder="dd/mm/aaaa" />
+        </div>
+
+        <!-- Data VOLTA -->
+        <div class="field field--volta">
+          <label class="field-label">
+            <svg class="field-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+              <line x1="16" y1="2" x2="16" y2="6"/>
+              <line x1="8" y1="2" x2="8" y2="6"/>
+              <line x1="3" y1="10" x2="21" y2="10"/>
+            </svg>
+            VOLTA
+          </label>
+          <input class="field-input" type="text" value="15/06/2025" placeholder="dd/mm/aaaa" />
+        </div>
+
+        <!-- Passageiros -->
+        <div class="field field--passageiros">
+          <label class="field-label">
+            <svg class="field-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+            PASSAGEIROS
+          </label>
+          <select class="field-input field-select">
+            <option>1 adulto</option>
+            <option>2 adultos</option>
+            <option>3 adultos</option>
+            <option>4 adultos</option>
+          </select>
+        </div>
+
+        <!-- Classe -->
+        <div class="field field--classe">
+          <label class="field-label">
+            <svg class="field-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 16V8a2 2 0 0 0-1-1.73L13 2.27a2 2 0 0 0-2 0L4 6.27A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+            </svg>
+            CLASSE
+          </label>
+          <select class="field-input field-select">
+            <option>Econômica</option>
+            <option>Executiva</option>
+            <option>Primeira Classe</option>
+          </select>
+        </div>
+
+      </div>
+
+      <!-- BUSCAR -->
+      <button class="btn-buscar">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        Buscar voos
+      </button>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-cols">
+        <div class="footer-brand">
+          <span class="footer-logo"><span class="logo-sky">Sky</span><span class="logo-pass-footer">Flow</span></span>
+          <p>Voos diretos e com conexão para todo o Mundo, com os melhores preços e praticidade.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Navegação</h4>
+          <ul>
+            <li><a href="#">Voos</a></li>
+            <li><a href="#">Check-in</a></li>
+            <li><a href="#">Minha reserva</a></li>
+            <li><a href="#">Avaliações</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Suporte</h4>
+          <ul>
+            <li><a href="#">Central de ajuda</a></li>
+            <li><a href="#">Política de cancelamento</a></li>
+            <li><a href="#">Termos de uso</a></li>
+            <li><a href="#">Contato</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 CodeSchool. Todos os direitos reservados. Desenvolvedor: Tioski e Amigos, Lucas e Amigos, Giovany e Amigos, Silvano e Amigos, Enzo e Amigos</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

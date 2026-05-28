@@ -5,16 +5,19 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "status_voo")
+@Table(name = "pais")
 @Data
 @NoArgsConstructor
-public class StatusVoo {
+public class Pais {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_status_voo")
+    @Column(name = "id_pais")
     private Long id;
 
-    @Column(nullable = false, unique = true, length = 20)
-    private String descricao;
+    @Column(nullable = false, unique = true, length = 100)
+    private String nome;
+
+    @Column(nullable = false, unique = true, length = 2)
+    private String sigla;
 }

@@ -1,34 +1,33 @@
 /* ============================================
-   SkyPass – Light Theme
+   SkyPass – Light Theme + Dark Mode
    ============================================ */
 
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 
-/* ── CSS Variables (Light Theme) ─────────── */
+/* ── CSS Variables – Light ───────────────── */
 :root {
   --bg-page:        #f0f4fa;
   --bg-card:        #ffffff;
   --bg-navbar:      #ffffff;
-  --bg-hero:        #e8f0fe;
   --hero-gradient:  linear-gradient(135deg, #ddeeff 0%, #e8f0fe 60%, #f0f5ff 100%);
+  --bg-footer:      #ffffff;
 
-  --accent:         #f5a623;
-  --accent-hover:   #e09510;
+  --accent:         #ae0fec;
+  --accent-hover:   #9b0ddd;
 
   --text-primary:   #1a2540;
   --text-secondary: #5a6a8a;
   --text-muted:     #99aac4;
-  --text-light:     #ffffff;
 
   --border:         #dde4f0;
-  --border-focus:   #3a6fd8;
+  --border-focus:   #ffffff;
 
   --input-bg:       #f7f9fc;
   --input-bg-hover: #edf1fb;
 
   --shadow-nav:     0 2px 12px rgba(26,37,64,0.08);
   --shadow-card:    0 8px 40px rgba(26,37,64,0.10);
-  --shadow-btn:     0 4px 18px rgba(245,166,35,0.35);
+  --shadow-btn:     0 4px 18px rgba(17, 0, 255, 0.35);
 
   --radius-card:    18px;
   --radius-input:   10px;
@@ -36,8 +35,33 @@
 
   --font-display:   'Plus Jakarta Sans', sans-serif;
   --font-body:      'DM Sans', sans-serif;
-
   --transition:     0.2s ease;
+}
+
+/* ── CSS Variables – Dark ────────────────── */
+body.dark-mode {
+  --bg-page:        #0d1117;
+  --bg-card:        #161b22;
+  --bg-navbar:      #161b22;
+  --hero-gradient:  linear-gradient(135deg, #0d1117 0%, #111827 60%, #0f172a 100%);
+  --bg-footer:      #161b22;
+
+  --accent:         #7301df;
+  --accent-hover:   #6300e6;
+
+  --text-primary:   #e6edf3;
+  --text-secondary: #8b949e;
+  --text-muted:     #484f58;
+
+  --border:         #30363d;
+  --border-focus:   #58a6ff;
+
+  --input-bg:       #0d1117;
+  --input-bg-hover: #1c2128;
+
+  --shadow-nav:     0 2px 12px rgba(0,0,0,0.4);
+  --shadow-card:    0 8px 40px rgba(0,0,0,0.5);
+  --shadow-btn:     0 4px 18px rgba(0, 121, 202, 0.3);
 }
 
 /* ── Reset ───────────────────────────────── */
@@ -55,6 +79,7 @@ body {
   display: flex;
   flex-direction: column;
   -webkit-font-smoothing: antialiased;
+  transition: background var(--transition), color var(--transition);
 }
 
 /* ── Navbar ──────────────────────────────── */
@@ -65,6 +90,7 @@ body {
   top: 0;
   z-index: 100;
   box-shadow: var(--shadow-nav);
+  transition: background var(--transition), border-color var(--transition);
 }
 
 .nav-container {
@@ -77,7 +103,6 @@ body {
   gap: 32px;
 }
 
-/* Logo */
 .logo {
   text-decoration: none;
   font-family: var(--font-display);
@@ -87,9 +112,8 @@ body {
   flex-shrink: 0;
 }
 .logo-sky  { color: var(--accent); }
-.logo-pass { color: var(--text-primary); }
+.logo-pass { color: var(--text-primary); transition: color var(--transition); }
 
-/* Nav links */
 .nav-links {
   list-style: none;
   display: flex;
@@ -113,7 +137,7 @@ body {
   background: var(--input-bg-hover);
 }
 
-/* Theme toggle (moon icon) */
+/* Theme toggle */
 .theme-toggle {
   margin-left: auto;
   background: var(--input-bg);
@@ -131,9 +155,9 @@ body {
   flex-shrink: 0;
 }
 
-.theme-toggle svg {
-  width: 17px;
-  height: 17px;
+.theme-toggle i {
+  font-size: 18px;
+  line-height: 1;
 }
 
 .theme-toggle:hover {
@@ -146,29 +170,14 @@ body {
 /* ── Hero ────────────────────────────────── */
 .hero {
   background: var(--hero-gradient);
-  border-bottom: 1px solid #d0dcf0;
+  border-bottom: 1px solid var(--border);
   padding: 52px 28px 72px;
-  position: relative;
-  overflow: hidden;
-}
-
-.hero::after {
-  content: '';
-  position: absolute;
-  right: -40px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 340px;
-  height: 220px;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 80' fill='none'%3E%3Cpath d='M110 10 L10 40 L30 46 L38 70 L54 50 L90 58 Z' fill='%233a6fd8' opacity='0.07' stroke='%233a6fd8' stroke-width='1' stroke-opacity='0.15'/%3E%3C/svg%3E") center/contain no-repeat;
-  pointer-events: none;
+  transition: background var(--transition), border-color var(--transition);
 }
 
 .hero-content {
   max-width: 1100px;
   margin: 0 auto;
-  position: relative;
-  z-index: 1;
 }
 
 .hero-title {
@@ -178,12 +187,14 @@ body {
   color: var(--text-primary);
   letter-spacing: -0.5px;
   margin-bottom: 8px;
+  transition: color var(--transition);
 }
 
 .hero-subtitle {
   font-size: 1rem;
   color: var(--text-secondary);
   font-weight: 400;
+  transition: color var(--transition);
 }
 
 /* ── Main / Card ─────────────────────────── */
@@ -202,7 +213,8 @@ body {
   border-radius: var(--radius-card);
   box-shadow: var(--shadow-card);
   padding: 28px 32px 32px;
-  border: 1px solid #e6ecf7;
+  border: 1px solid var(--border);
+  transition: background var(--transition), border-color var(--transition), box-shadow var(--transition);
 }
 
 /* ── Tabs ────────────────────────────────── */
@@ -211,6 +223,7 @@ body {
   gap: 4px;
   margin-bottom: 24px;
   border-bottom: 2px solid var(--border);
+  transition: border-color var(--transition);
 }
 
 .tab {
@@ -247,7 +260,6 @@ body {
   margin-bottom: 20px;
 }
 
-/* Field */
 .field {
   display: flex;
   flex-direction: column;
@@ -265,6 +277,7 @@ body {
   align-items: center;
   gap: 5px;
   cursor: default;
+  transition: color var(--transition);
 }
 
 .field-icon {
@@ -285,23 +298,23 @@ body {
   font-size: 0.92rem;
   color: var(--text-primary);
   outline: none;
-  transition: border-color var(--transition), background var(--transition), box-shadow var(--transition);
+  transition: border-color var(--transition), background var(--transition),
+              color var(--transition), box-shadow var(--transition);
   -webkit-appearance: none;
   appearance: none;
 }
 
 .field-input:hover {
   background: var(--input-bg-hover);
-  border-color: #b8c8e0;
+  border-color: var(--border-focus);
 }
 
 .field-input:focus {
   border-color: var(--border-focus);
-  background: #fff;
+  background: var(--input-bg-hover);
   box-shadow: 0 0 0 3px rgba(58,111,216,0.10);
 }
 
-/* Select arrow */
 .field-select {
   padding-right: 36px;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235a6a8a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
@@ -311,7 +324,6 @@ body {
   cursor: pointer;
 }
 
-/* Swap button */
 .swap-btn {
   width: 40px;
   height: 48px;
@@ -373,9 +385,10 @@ body {
 
 /* ── Footer ──────────────────────────────── */
 .footer {
-  background: #ffffff;
+  background: var(--bg-footer);
   border-top: 1px solid var(--border);
   margin-top: auto;
+  transition: background var(--transition), border-color var(--transition);
 }
 
 .footer-inner {
@@ -400,13 +413,17 @@ body {
   margin-bottom: 12px;
 }
 
-.logo-pass-footer { color: var(--text-primary); }
+.logo-pass-footer {
+  color: var(--text-primary);
+  transition: color var(--transition);
+}
 
 .footer-brand p {
   font-size: 0.875rem;
   color: var(--text-secondary);
   line-height: 1.7;
   max-width: 280px;
+  transition: color var(--transition);
 }
 
 .footer-col h4 {
@@ -417,6 +434,7 @@ body {
   letter-spacing: 0.07em;
   color: var(--text-primary);
   margin-bottom: 14px;
+  transition: color var(--transition);
 }
 
 .footer-col ul {
@@ -441,11 +459,13 @@ body {
   border-top: 1px solid var(--border);
   padding: 18px 0;
   text-align: center;
+  transition: border-color var(--transition);
 }
 
 .footer-bottom p {
   font-size: 0.8rem;
   color: var(--text-muted);
+  transition: color var(--transition);
 }
 
 /* ── Responsive ──────────────────────────── */
@@ -461,25 +481,16 @@ body {
   .field--volta       { grid-column: 2 / 3; }
   .field--passageiros { grid-column: 3 / 4; }
   .field--classe      { grid-column: 1 / 2; }
-
-  .footer-cols {
-    grid-template-columns: 1fr 1fr;
-  }
+  .footer-cols { grid-template-columns: 1fr 1fr; }
   .footer-brand { grid-column: 1 / 3; }
 }
 
 @media (max-width: 620px) {
   .nav-links { display: none; }
-
   .hero { padding: 36px 20px 64px; }
-
   .main { padding: 0 16px; margin-top: -34px; }
-
   .search-card { padding: 20px 16px 24px; }
-
-  .form-grid {
-    grid-template-columns: 1fr 1fr;
-  }
+  .form-grid { grid-template-columns: 1fr 1fr; }
   .field--origem      { grid-column: 1 / 2; }
   .swap-btn           { grid-column: 2 / 3; justify-self: end; align-self: end; }
   .field--destino     { grid-column: 1 / 3; }
@@ -487,9 +498,6 @@ body {
   .field--volta       { grid-column: 2 / 3; }
   .field--passageiros { grid-column: 1 / 2; }
   .field--classe      { grid-column: 2 / 3; }
-
-  .footer-cols {
-    grid-template-columns: 1fr;
-  }
+  .footer-cols { grid-template-columns: 1fr; }
   .footer-brand { grid-column: 1; }
 }

@@ -3,198 +3,555 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SkyPass – Voos diretos e com conexão</title>
-  <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
-  <!-- Phosphor Icons -->
+  <title>SkyFlow – Voos diretos e com conexão</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- NAVBAR -->
-  <nav class="navbar">
-    <div class="nav-container">
-      <a href="#" class="logo">
-        <span class="logo-sky">Sky</span><span class="logo-pass">Flow</span>
+  <!-- ===== HEADER FIXO ===== -->
+  <header class="header" id="header">
+    <div class="container header-container">
+      <a href="#" class="logo" onclick="showPage('voos')">
+        <i class="ph ph-airplane-tilt"></i> SkyFlow
       </a>
 
-      <ul class="nav-links">
-        <li><a href="#">Voos</a></li>
-        <li><a href="#">Check-in</a></li>
-        <li><a href="#">Minha reserva</a></li>
-        <li><a href="#">Avaliações</a></li>
-      </ul>
+      <nav class="nav" id="nav">
+        <ul class="nav-list">
+          <li><a href="#" class="nav-link active" data-page="voos" onclick="showPage('voos')">Voos</a></li>
+          <li><a href="#" class="nav-link" data-page="checkin" onclick="showPage('checkin')">Check-in</a></li>
+          <li><a href="#" class="nav-link" data-page="reserva" onclick="showPage('reserva')">Minha reserva</a></li>
+          <li><a href="#" class="nav-link" data-page="avaliacoes" onclick="showPage('avaliacoes')">Avaliações</a></li>
+        </ul>
+      </nav>
 
-      <button class="theme-toggle" id="themeToggle" title="Alternar tema">
-        <i class="ph ph-moon"></i>
-      </button>
-    </div>
-  </nav>
-
-  <!-- HERO -->
-  <header class="hero">
-    <div class="hero-content">
-      <h1 class="hero-title">Para onde você vai?</h1>
-      <p class="hero-subtitle">Voos diretos e com conexão para todo o Brasil</p>
+      <div class="header-actions">
+        <button id="theme-toggle" class="icon-btn" aria-label="Trocar Tema">
+          <i class="ph ph-moon"></i>
+        </button>
+        <button class="icon-btn menu-btn" id="menu-btn" aria-label="Abrir Menu">
+          <i class="ph ph-list"></i>
+        </button>
+      </div>
     </div>
   </header>
 
-  <!-- SEARCH CARD -->
-  <main class="main">
-    <div class="search-card">
+  <main class="main-wrapper">
 
-      <!-- TABS -->
-      <div class="tabs" role="tablist">
-        <button class="tab active" role="tab" aria-selected="true">Ida e volta</button>
-        <button class="tab" role="tab" aria-selected="false">Somente ida</button>
-        <button class="tab" role="tab" aria-selected="false">Multitrecho</button>
-      </div>
+    <!-- =========================================
+         PÁGINA 1: VOOS
+    ========================================= -->
+    <div id="page-voos" class="page active">
 
-      <!-- FORM -->
-      <div class="form-grid">
-
-        <!-- Origem -->
-        <div class="field field--origem">
-          <label class="field-label">
-            <svg class="field-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.93a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7a2 2 0 0 1 1.72 2z"/>
-            </svg>
-            ORIGEM
-          </label>
-          <input class="field-input" type="text" value="São Paulo (GRU)" placeholder="Cidade de origem" />
+      <!-- Hero Banner -->
+      <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content container">
+          <h1 class="hero-title">Para onde você vai?</h1>
+          <p class="hero-subtitle">Voos diretos e com conexão para todo o Brasil</p>
         </div>
+      </section>
 
-        <!-- Swap button -->
-        <button class="swap-btn" title="Inverter origem e destino">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M7 16V4m0 0L3 8m4-4l4 4"/>
-            <path d="M17 8v12m0 0l4-4m-4 4l-4-4"/>
-          </svg>
-        </button>
+      <!-- Formulário de Busca -->
+      <section class="search-section">
+        <div class="container">
+          <div class="search-card">
 
-        <!-- Destino -->
-        <div class="field field--destino">
-          <label class="field-label">
-            <svg class="field-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.93a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7a2 2 0 0 1 1.72 2z"/>
-            </svg>
-            DESTINO
-          </label>
-          <input class="field-input" type="text" value="Rio de Janeiro (GIG)" placeholder="Cidade de destino" />
+            <!-- Tabs de tipo de viagem -->
+            <div class="tabs" role="tablist">
+              <button class="tab active" data-tab="ida-volta" role="tab">Ida e volta</button>
+              <button class="tab" data-tab="somente-ida" role="tab">Somente ida</button>
+              <button class="tab" data-tab="multitrecho" role="tab">Multitrecho</button>
+            </div>
+
+            <!-- Formulário principal (Ida e volta / Somente ida) -->
+            <div id="form-padrao" class="form-grid">
+              <div class="field field--origem">
+                <label class="field-label"><i class="ph ph-airplane-takeoff"></i> ORIGEM</label>
+                <input class="field-input" id="origem" type="text" placeholder="Cidade ou aeroporto" value="São Paulo (GRU)" autocomplete="off" />
+              </div>
+
+              <button class="swap-btn" id="swap-btn" title="Inverter origem e destino">
+                <i class="ph ph-arrows-left-right"></i>
+              </button>
+
+              <div class="field field--destino">
+                <label class="field-label"><i class="ph ph-airplane-landing"></i> DESTINO</label>
+                <input class="field-input" id="destino" type="text" placeholder="Cidade ou aeroporto" value="Rio de Janeiro (GIG)" autocomplete="off" />
+              </div>
+
+              <div class="field field--ida">
+                <label class="field-label"><i class="ph ph-calendar"></i> IDA</label>
+                <input class="field-input" id="data-ida" type="date" />
+              </div>
+
+              <div class="field field--volta" id="campo-volta">
+                <label class="field-label"><i class="ph ph-calendar-check"></i> VOLTA</label>
+                <input class="field-input" id="data-volta" type="date" />
+              </div>
+
+              <div class="field field--passageiros">
+                <label class="field-label"><i class="ph ph-users"></i> PASSAGEIROS</label>
+                <select class="field-input field-select" id="passageiros">
+                  <option value="1">1 adulto</option>
+                  <option value="2">2 adultos</option>
+                  <option value="3">3 adultos</option>
+                  <option value="4">4 adultos</option>
+                  <option value="5">5 adultos</option>
+                </select>
+              </div>
+
+              <div class="field field--classe">
+                <label class="field-label"><i class="ph ph-seat"></i> CLASSE</label>
+                <select class="field-input field-select" id="classe">
+                  <option value="economica">Econômica</option>
+                  <option value="executiva">Executiva</option>
+                  <option value="primeira">Primeira Classe</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Formulário Multitrecho -->
+            <div id="form-multitrecho" class="hidden">
+              <div id="trechos-container">
+                <div class="trecho-item form-grid-multi" data-trecho="1">
+                  <div class="field">
+                    <label class="field-label"><i class="ph ph-airplane-takeoff"></i> ORIGEM</label>
+                    <input class="field-input" type="text" placeholder="Cidade de origem" />
+                  </div>
+                  <div class="field">
+                    <label class="field-label"><i class="ph ph-airplane-landing"></i> DESTINO</label>
+                    <input class="field-input" type="text" placeholder="Cidade de destino" />
+                  </div>
+                  <div class="field">
+                    <label class="field-label"><i class="ph ph-calendar"></i> DATA</label>
+                    <input class="field-input" type="date" />
+                  </div>
+                </div>
+              </div>
+              <button class="btn btn-outline btn-add-trecho" id="add-trecho">
+                <i class="ph ph-plus-circle"></i> Adicionar trecho
+              </button>
+            </div>
+
+            <button class="btn btn-primary btn-buscar" id="btn-buscar">
+              <i class="ph ph-magnifying-glass"></i> Buscar voos
+            </button>
+          </div>
         </div>
+      </section>
 
-        <!-- Data IDA -->
-        <div class="field field--ida">
-          <label class="field-label">
-            <svg class="field-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-              <line x1="16" y1="2" x2="16" y2="6"/>
-              <line x1="8" y1="2" x2="8" y2="6"/>
-              <line x1="3" y1="10" x2="21" y2="10"/>
-            </svg>
-            IDA
-          </label>
-          <input class="field-input" type="text" value="12/06/2025" placeholder="dd/mm/aaaa" />
+      <!-- Resultados de Busca -->
+      <section class="section" id="resultados-section" style="display:none;">
+        <div class="container">
+          <div class="section-title">
+            <h2>Voos disponíveis</h2>
+            <div class="line"></div>
+            <p id="resultado-subtitulo">Resultados para a sua busca</p>
+          </div>
+
+          <!-- Loading -->
+          <div id="loading-voos" class="loading-box hidden">
+            <i class="ph ph-airplane ph-spin"></i>
+            <p>Buscando os melhores voos...</p>
+          </div>
+
+          <!-- Lista de Resultados -->
+          <div id="lista-voos" class="voos-list">
+            <!-- Populado via JS / API -->
+          </div>
         </div>
+      </section>
 
-        <!-- Data VOLTA -->
-        <div class="field field--volta">
-          <label class="field-label">
-            <svg class="field-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-              <line x1="16" y1="2" x2="16" y2="6"/>
-              <line x1="8" y1="2" x2="8" y2="6"/>
-              <line x1="3" y1="10" x2="21" y2="10"/>
-            </svg>
-            VOLTA
-          </label>
-          <input class="field-input" type="text" value="15/06/2025" placeholder="dd/mm/aaaa" />
+      <!-- Widgets inferiores: Consultar reserva + Avaliar voo -->
+      <section class="section bg-alt">
+        <div class="container grid-widgets">
+
+          <!-- Consultar reserva rápida -->
+          <div class="widget-card">
+            <div class="widget-icon"><i class="ph ph-ticket"></i></div>
+            <div class="widget-body">
+              <h3>Consultar minha reserva</h3>
+              <div class="widget-form">
+                <input class="field-input" id="codigo-reserva-rapido" type="text" placeholder="Ex: ABC123" maxlength="10" />
+                <button class="btn btn-primary" onclick="buscarReservaRapida()">
+                  <i class="ph ph-magnifying-glass"></i> Buscar
+                </button>
+              </div>
+              <p id="msg-reserva-rapida" class="msg-feedback hidden"></p>
+            </div>
+          </div>
+
+          <!-- Avaliar último voo -->
+          <div class="widget-card">
+            <div class="widget-icon"><i class="ph ph-star"></i></div>
+            <div class="widget-body">
+              <h3>Avalie seu último voo</h3>
+              <p class="widget-desc" id="ultimo-voo-desc">Azul AD4501 · GRU → SSA · 03/06/2025</p>
+              <div class="stars-widget" id="quick-stars">
+                <i class="ph ph-star" data-val="1"></i>
+                <i class="ph ph-star" data-val="2"></i>
+                <i class="ph ph-star" data-val="3"></i>
+                <i class="ph ph-star" data-val="4"></i>
+                <i class="ph ph-star" data-val="5"></i>
+              </div>
+              <button class="btn btn-outline" onclick="showPage('avaliacoes')">
+                Enviar avaliação completa
+              </button>
+            </div>
+          </div>
+
         </div>
-
-        <!-- Passageiros -->
-        <div class="field field--passageiros">
-          <label class="field-label">
-            <svg class="field-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-              <circle cx="12" cy="7" r="4"/>
-            </svg>
-            PASSAGEIROS
-          </label>
-          <select class="field-input field-select">
-            <option>1 adulto</option>
-            <option>2 adultos</option>
-            <option>3 adultos</option>
-            <option>4 adultos</option>
-          </select>
-        </div>
-
-        <!-- Classe -->
-        <div class="field field--classe">
-          <label class="field-label">
-            <svg class="field-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 16V8a2 2 0 0 0-1-1.73L13 2.27a2 2 0 0 0-2 0L4 6.27A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
-            </svg>
-            CLASSE
-          </label>
-          <select class="field-input field-select">
-            <option>Econômica</option>
-            <option>Executiva</option>
-            <option>Primeira Classe</option>
-          </select>
-        </div>
-
-      </div>
-
-      <!-- BUSCAR -->
-      <button class="btn-buscar">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-          stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="11" cy="11" r="8"/>
-          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-        </svg>
-        Buscar voos
-      </button>
-
+      </section>
     </div>
+
+    <!-- =========================================
+         PÁGINA 2: CHECK-IN
+    ========================================= -->
+    <div id="page-checkin" class="page hidden">
+      <div class="page-hero page-hero--checkin">
+        <div class="container">
+          <h1><i class="ph ph-check-circle"></i> Check-in Online</h1>
+          <p>Faça seu check-in com antecedência e evite filas no aeroporto</p>
+        </div>
+      </div>
+
+      <section class="section">
+        <div class="container">
+          <div class="content-card">
+            <h2 class="content-card-title">Realizar Check-in</h2>
+            <p class="content-card-desc">Informe o código da sua reserva e o sobrenome do passageiro titular.</p>
+
+            <div class="form-group">
+              <div class="input-group">
+                <label for="ci-codigo">Código da reserva</label>
+                <!-- INTEGRAÇÃO: GET /api/checkin/buscar?codigo={codigo}&sobrenome={sobrenome} -->
+                <input class="field-input" type="text" id="ci-codigo" placeholder="Ex: ABC123" maxlength="10" />
+              </div>
+              <div class="input-group">
+                <label for="ci-sobrenome">Sobrenome do passageiro</label>
+                <input class="field-input" type="text" id="ci-sobrenome" placeholder="Ex: SILVA" />
+              </div>
+              <button class="btn btn-primary" id="btn-checkin" onclick="realizarCheckin()">
+                <i class="ph ph-magnifying-glass"></i> Buscar reserva
+              </button>
+            </div>
+
+            <!-- Resultado do Check-in -->
+            <div id="checkin-resultado" class="hidden">
+              <div class="divider"></div>
+              <h3 class="subsection-title">Passageiros encontrados</h3>
+              <div id="checkin-passageiros" class="passageiros-list"></div>
+              <div class="checkin-assentos">
+                <h4>Escolha seu assento</h4>
+                <div id="mapa-assentos" class="assentos-grid">
+                  <!-- Mapa de assentos - Populado via API -->
+                  <!-- INTEGRAÇÃO: GET /api/voos/{vooId}/assentos -->
+                </div>
+              </div>
+              <button class="btn btn-primary btn-confirmar" id="btn-confirmar-checkin" onclick="confirmarCheckin()">
+                <i class="ph ph-check-circle"></i> Confirmar Check-in
+              </button>
+            </div>
+
+            <div id="checkin-sucesso" class="hidden success-box">
+              <i class="ph ph-check-circle ph-duotone"></i>
+              <h3>Check-in realizado com sucesso!</h3>
+              <p>Seu cartão de embarque foi enviado para o e-mail cadastrado.</p>
+              <button class="btn btn-outline" onclick="downloadBoardingPass()">
+                <i class="ph ph-download-simple"></i> Baixar cartão de embarque
+              </button>
+            </div>
+          </div>
+
+          <!-- Informações úteis -->
+          <div class="info-cards">
+            <div class="info-card">
+              <i class="ph ph-clock"></i>
+              <h4>Horário</h4>
+              <p>Check-in disponível até 1 hora antes do embarque</p>
+            </div>
+            <div class="info-card">
+              <i class="ph ph-bag-simple"></i>
+              <h4>Bagagem</h4>
+              <p>Verifique a franquia de bagagem incluída na sua tarifa</p>
+            </div>
+            <div class="info-card">
+              <i class="ph ph-identification-card"></i>
+              <h4>Documentos</h4>
+              <p>Tenha em mãos RG, CPF ou passaporte para o embarque</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- =========================================
+         PÁGINA 3: MINHA RESERVA
+    ========================================= -->
+    <div id="page-reserva" class="page hidden">
+      <div class="page-hero page-hero--reserva">
+        <div class="container">
+          <h1><i class="ph ph-ticket"></i> Minha Reserva</h1>
+          <p>Consulte, gerencie e acompanhe sua reserva em tempo real</p>
+        </div>
+      </div>
+
+      <section class="section">
+        <div class="container">
+          <div class="content-card">
+            <h2 class="content-card-title">Consultar reserva</h2>
+
+            <div class="form-group">
+              <div class="input-group">
+                <label for="res-codigo">Código da reserva</label>
+                <!-- INTEGRAÇÃO: GET /api/reservas/{codigo} -->
+                <input class="field-input" type="text" id="res-codigo" placeholder="Ex: ABC123" maxlength="10" />
+              </div>
+              <div class="input-group">
+                <label for="res-email">E-mail do passageiro</label>
+                <input class="field-input" type="email" id="res-email" placeholder="seu@email.com" />
+              </div>
+              <button class="btn btn-primary" onclick="buscarReserva()">
+                <i class="ph ph-magnifying-glass"></i> Consultar
+              </button>
+            </div>
+
+            <!-- Detalhes da Reserva -->
+            <div id="reserva-detalhes" class="hidden">
+              <div class="divider"></div>
+              <div class="reserva-header">
+                <div>
+                  <span class="reserva-codigo" id="res-codigo-display">—</span>
+                  <span class="status-badge" id="res-status">CONFIRMADA</span>
+                </div>
+                <div class="reserva-acoes">
+                  <button class="btn btn-outline btn-sm" onclick="cancelarReserva()">
+                    <i class="ph ph-x-circle"></i> Cancelar
+                  </button>
+                  <button class="btn btn-outline btn-sm" onclick="alterarReserva()">
+                    <i class="ph ph-pencil-simple"></i> Alterar
+                  </button>
+                </div>
+              </div>
+
+              <!-- Trecho de ida -->
+              <div class="voo-card" id="res-voo-ida">
+                <!-- Populado via JS/API -->
+              </div>
+
+              <!-- Trecho de volta (se houver) -->
+              <div id="res-voo-volta-wrapper" class="hidden">
+                <div class="voo-card" id="res-voo-volta"></div>
+              </div>
+
+              <!-- Passageiros da reserva -->
+              <div class="reserva-passageiros">
+                <h4 class="subsection-title">Passageiros</h4>
+                <div id="res-passageiros-lista" class="passageiros-list"></div>
+              </div>
+
+              <!-- Resumo de valores -->
+              <div class="reserva-valores">
+                <h4 class="subsection-title">Resumo financeiro</h4>
+                <div class="valores-table" id="res-valores-table">
+                  <!-- Populado via JS/API -->
+                </div>
+              </div>
+            </div>
+
+            <div id="reserva-nao-encontrada" class="hidden error-box">
+              <i class="ph ph-warning-circle"></i>
+              <p>Reserva não encontrada. Verifique o código e o e-mail informados.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- =========================================
+         PÁGINA 4: AVALIAÇÕES
+    ========================================= -->
+    <div id="page-avaliacoes" class="page hidden">
+      <div class="page-hero page-hero--avaliacoes">
+        <div class="container">
+          <h1><i class="ph ph-star-half"></i> Avaliações</h1>
+          <p>Sua opinião ajuda outros passageiros a escolher melhor</p>
+        </div>
+      </div>
+
+      <section class="section">
+        <div class="container">
+          <div class="avaliacoes-layout">
+
+            <!-- Formulário de avaliação -->
+            <div class="content-card">
+              <h2 class="content-card-title">Avaliar voo</h2>
+              <p class="content-card-desc">Compartilhe sua experiência sobre o voo realizado.</p>
+
+              <div class="form-avaliacao">
+                <div class="input-group">
+                  <label for="av-voo-id">Código do voo <span class="label-hint">(ex: AD4501)</span></label>
+                  <!-- INTEGRAÇÃO: vooId é usado como chave de relacionamento no MongoDB -->
+                  <input class="field-input" type="text" id="av-voo-id" placeholder="Código do voo" />
+                </div>
+
+                <div class="input-group">
+                  <label for="av-companhia">Companhia aérea</label>
+                  <!-- INTEGRAÇÃO: GET /api/companhias para popular o select -->
+                  <select class="field-input field-select" id="av-companhia">
+                    <option value="">Selecione a companhia</option>
+                    <option value="azul">Azul Linhas Aéreas</option>
+                    <option value="gol">Gol Linhas Aéreas</option>
+                    <option value="latam">LATAM Airlines</option>
+                  </select>
+                </div>
+
+                <div class="input-group">
+                  <label for="av-nome">Seu nome <span class="label-hint">(opcional)</span></label>
+                  <input class="field-input" type="text" id="av-nome" placeholder="Como quer ser identificado" />
+                </div>
+
+                <!-- Critérios de avaliação -->
+                <div class="criterios-avaliacao">
+                  <h4>Avalie cada aspecto</h4>
+                  <div class="criterio-item">
+                    <span class="criterio-label">Pontualidade</span>
+                    <div class="stars-input" id="stars-pontualidade" data-criterio="pontualidade">
+                      <i class="ph ph-star" data-val="1"></i>
+                      <i class="ph ph-star" data-val="2"></i>
+                      <i class="ph ph-star" data-val="3"></i>
+                      <i class="ph ph-star" data-val="4"></i>
+                      <i class="ph ph-star" data-val="5"></i>
+                    </div>
+                  </div>
+                  <div class="criterio-item">
+                    <span class="criterio-label">Conforto</span>
+                    <div class="stars-input" id="stars-conforto" data-criterio="conforto">
+                      <i class="ph ph-star" data-val="1"></i>
+                      <i class="ph ph-star" data-val="2"></i>
+                      <i class="ph ph-star" data-val="3"></i>
+                      <i class="ph ph-star" data-val="4"></i>
+                      <i class="ph ph-star" data-val="5"></i>
+                    </div>
+                  </div>
+                  <div class="criterio-item">
+                    <span class="criterio-label">Atendimento</span>
+                    <div class="stars-input" id="stars-atendimento" data-criterio="atendimento">
+                      <i class="ph ph-star" data-val="1"></i>
+                      <i class="ph ph-star" data-val="2"></i>
+                      <i class="ph ph-star" data-val="3"></i>
+                      <i class="ph ph-star" data-val="4"></i>
+                      <i class="ph ph-star" data-val="5"></i>
+                    </div>
+                  </div>
+                  <div class="criterio-item">
+                    <span class="criterio-label">Custo-benefício</span>
+                    <div class="stars-input" id="stars-custo" data-criterio="custo">
+                      <i class="ph ph-star" data-val="1"></i>
+                      <i class="ph ph-star" data-val="2"></i>
+                      <i class="ph ph-star" data-val="3"></i>
+                      <i class="ph ph-star" data-val="4"></i>
+                      <i class="ph ph-star" data-val="5"></i>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="input-group">
+                  <label for="av-comentario">Comentário <span class="label-hint">(opcional)</span></label>
+                  <!-- INTEGRAÇÃO: campo "comentario" no documento MongoDB -->
+                  <textarea class="field-input" id="av-comentario" rows="4" placeholder="Conte sua experiência no voo..."></textarea>
+                </div>
+
+                <button class="btn btn-primary w-full" id="btn-enviar-avaliacao" onclick="enviarAvaliacao()">
+                  <i class="ph ph-paper-plane-tilt"></i> Enviar avaliação
+                </button>
+
+                <div id="av-sucesso" class="hidden success-box">
+                  <i class="ph ph-check-circle"></i>
+                  <p>Avaliação enviada com sucesso! Obrigado pelo feedback.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Painel de médias por companhia -->
+            <div>
+              <div class="content-card ranking-card">
+                <h3 class="content-card-title">
+                  <i class="ph ph-chart-bar"></i> Ranking de companhias
+                </h3>
+                <p class="content-card-desc">Média calculada por pipeline de agregação</p>
+                <!-- INTEGRAÇÃO: GET /api/avaliacoes/ranking-companhias
+                     Resultado da pipeline MongoDB:
+                     { _id: "companhia", mediaGeral: 4.3, totalAvaliacoes: 120 } -->
+                <div id="ranking-companhias" class="ranking-list">
+                  <div class="loading-box">
+                    <i class="ph ph-circle-notch ph-spin"></i>
+                    <p>Carregando ranking...</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="content-card" style="margin-top: 24px;">
+                <h3 class="content-card-title">
+                  <i class="ph ph-chat-text"></i> Avaliações recentes
+                </h3>
+                <!-- INTEGRAÇÃO: GET /api/avaliacoes/recentes?limit=5 -->
+                <div id="avaliacoes-recentes" class="avaliacoes-recentes-list">
+                  <div class="loading-box">
+                    <i class="ph ph-circle-notch ph-spin"></i>
+                    <p>Carregando avaliações...</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
   </main>
 
-  <!-- FOOTER -->
+  <!-- ===== FOOTER ===== -->
   <footer class="footer">
-    <div class="footer-inner">
-      <div class="footer-cols">
-        <div class="footer-brand">
-          <span class="footer-logo"><span class="logo-sky">Sky</span><span class="logo-pass-footer">Flow</span></span>
-          <p>Voos diretos e com conexão para todo o Mundo, com os melhores preços e praticidade.</p>
-        </div>
-        <div class="footer-col">
-          <h4>Navegação</h4>
-          <ul>
-            <li><a href="#">Voos</a></li>
-            <li><a href="#">Check-in</a></li>
-            <li><a href="#">Minha reserva</a></li>
-            <li><a href="#">Avaliações</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Suporte</h4>
-          <ul>
-            <li><a href="#">Central de ajuda</a></li>
-            <li><a href="#">Política de cancelamento</a></li>
-            <li><a href="#">Termos de uso</a></li>
-            <li><a href="#">Contato</a></li>
-          </ul>
+    <div class="container footer-grid">
+      <div class="brand-col">
+        <a href="#" class="logo text-light" onclick="showPage('voos')">
+          <i class="ph ph-airplane-tilt"></i> SkyPass
+        </a>
+        <p>Voos diretos e com conexão para todo o Brasil, com os melhores preços e praticidade.</p>
+      </div>
+      <div class="link-col">
+        <h4>Navegação</h4>
+        <ul>
+          <li><a href="#" onclick="showPage('voos')">Voos</a></li>
+          <li><a href="#" onclick="showPage('checkin')">Check-in</a></li>
+          <li><a href="#" onclick="showPage('reserva')">Minha reserva</a></li>
+          <li><a href="#" onclick="showPage('avaliacoes')">Avaliações</a></li>
+        </ul>
+      </div>
+      <div class="link-col">
+        <h4>Suporte</h4>
+        <ul>
+          <li><a href="#">Central de ajuda</a></li>
+          <li><a href="#">Política de cancelamento</a></li>
+          <li><a href="#">Termos de uso</a></li>
+        </ul>
+      </div>
+      <div class="social-col">
+        <h4>Acompanhe</h4>
+        <div class="social-links">
+          <a href="#"><i class="ph ph-instagram-logo"></i></a>
+          <a href="#"><i class="ph ph-facebook-logo"></i></a>
+          <a href="#"><i class="ph ph-twitter-logo"></i></a>
         </div>
       </div>
-      <div class="footer-bottom">
-        <p>&copy; 2026 CodeSchool. Todos os direitos reservados. Desenvolvedor: Tioski e Amigos, Lucas e Amigos, Giovany e Amigos, Silvano e Amigos, Enzo e Amigos</p>
-      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 SkyPass. Todos os direitos reservados.</p>
     </div>
   </footer>
 

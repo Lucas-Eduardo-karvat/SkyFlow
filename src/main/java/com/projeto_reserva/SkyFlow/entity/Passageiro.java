@@ -40,6 +40,6 @@ public class Passageiro {
     @Column(length = 50)
     private String complemento;
 
-    @Column(nullable = false, length = 8)
+    @Column(nullable = false, length = 20) // era 8
     private String cep;
 }

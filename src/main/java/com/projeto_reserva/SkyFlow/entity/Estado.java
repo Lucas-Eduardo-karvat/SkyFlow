@@ -22,6 +22,6 @@ public class Estado {
     @Column(nullable = false, length = 100)
     private String nome;
 
-    @Column(nullable = false, length = 2)
+    @Column(nullable = false, length = 3) // era 2
     private String sigla;
 }

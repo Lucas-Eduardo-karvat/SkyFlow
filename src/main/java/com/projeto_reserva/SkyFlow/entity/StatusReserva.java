@@ -15,6 +15,6 @@ public class StatusReserva {
     @Column(name = "id_status_reserva")
     private Long id;
 
-    @Column(nullable = false, unique = true, length = 20)
+    @Column(nullable = false, unique = true, length = 30) // era 20
     private String descricao;
 }

@@ -3,37 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Localização</title>
+    <title>SkyFlow - Gerenciamento de Localização</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <h1>Localização</h1>
-
-    <div class="container">
-
-        <div class="grupo">
-            <label>País</label>
-            <select id="paises">
-                <option value="">Selecione um país</option>
-            </select>
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo">Sky<span>Flow</span></div>
+            <nav class="navigation">
+                <ul>
+                    <li><a href="#" class="active">Início</a></li>
+                    <li><a href="#">Voos</a></li>
+                    <li><a href="#">Aeroportos</a></li>
+                    <li><a href="#">Configurações</a></li>
+                </ul>
+            </nav>
         </div>
+    </header>
 
-        <div class="grupo">
-            <label>Estado</label>
-            <select id="estados" disabled>
-                <option value="">Selecione um estado</option>
-            </select>
+    <main class="content-wrapper">
+        
+        <section class="hero-section">
+            <h1>Gerenciamento de Destinos</h1>
+            <p>Selecione a região desejada abaixo para filtrar os dados operacionais da malha aérea SkyFlow.</p>
+        </section>
+
+        <section class="form-section">
+            <div class="location-card">
+                <div class="card-header">
+                    <h2>Filtro de Região</h2>
+                </div>
+                
+                <div class="container-selects">
+                    <div class="grupo">
+                        <label for="paises">País</label>
+                        <select id="paises">
+                            <option value="">Selecione um país</option>
+                        </select>
+                    </div>
+
+                    <div class="grupo">
+                        <label for="estados">Estado</label>
+                        <select id="estados" disabled>
+                            <option value="">Selecione um estado</option>
+                        </select>
+                    </div>
+
+                    <div class="grupo">
+                        <label for="cidades">Cidade</label>
+                        <select id="cidades" disabled>
+                            <option value="">Selecione uma cidade</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-container">
+            <p>&copy; 2026 SkyFlow Linhas Aéreas. Todos os direitos reservados.</p>
+            <p class="footer-sub">Ambiente de Desenvolvimento - Módulo de Localização</p>
         </div>
-
-        <div class="grupo">
-            <label>Cidade</label>
-            <select id="cidades" disabled>
-                <option value="">Selecione uma cidade</option>
-            </select>
-        </div>
-
-    </div>
+    </footer>
 
     <script src="script.js"></script>
 </body>

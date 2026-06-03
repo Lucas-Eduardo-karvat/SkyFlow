@@ -2,7 +2,7 @@ const selectPaises  = document.getElementById('paises');
 const selectEstados = document.getElementById('estados');
 const selectCidades = document.getElementById('cidades');
 
-// Quando a página carrega, busca os países
+// Busca países ao carregar
 fetch('http://localhost:8081/localizacao/paises')
     .then(resposta => resposta.json())
     .then(paises => {
@@ -14,11 +14,10 @@ fetch('http://localhost:8081/localizacao/paises')
         });
     });
 
-// Quando seleciona um país, busca os estados
+// Busca estados baseado no país selecionado
 selectPaises.addEventListener('change', () => {
     const idPais = selectPaises.value;
 
-    // Limpa e desabilita estados e cidades
     selectEstados.innerHTML = '<option value="">Selecione um estado</option>';
     selectCidades.innerHTML = '<option value="">Selecione uma cidade</option>';
     selectEstados.disabled = true;
@@ -39,7 +38,7 @@ selectPaises.addEventListener('change', () => {
         });
 });
 
-// Quando seleciona um estado, busca as cidades
+// Busca cidades baseado no estado selecionado
 selectEstados.addEventListener('change', () => {
     const idEstado = selectEstados.value;
 
@@ -53,6 +52,7 @@ selectEstados.addEventListener('change', () => {
         .then(cidades => {
             cidades.forEach(cidade => {
                 const option = document.createElement('option');
+                option.value = city => cidade.id; // Correção sutil se seu JSON bindar como id
                 option.value = cidade.id;
                 option.textContent = cidade.nome;
                 selectCidades.appendChild(option);

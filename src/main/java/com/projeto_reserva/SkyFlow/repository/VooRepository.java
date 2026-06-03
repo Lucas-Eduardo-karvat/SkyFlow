@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface VooRepository extends JpaRepository<Voo, Long> {
     Optional<Voo> findByCodigoVoo(String codigoVoo);
     List<Voo> findByCompanhiaId(Long idCompanhia);
+    List<Voo> findByStatusVooId(Long idStatusVoo);
 }

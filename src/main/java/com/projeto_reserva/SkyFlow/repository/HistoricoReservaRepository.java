@@ -7,5 +7,5 @@ import java.util.List;
 
 @Repository
 public interface HistoricoReservaRepository extends JpaRepository<HistoricoReserva, Long> {
-    List<HistoricoReserva> findByReservaIdOrderByDataAlteracaoDesc(Long idReserva);
+    List<HistoricoReserva> findByIdReservaOrderByDataAlteracaoDesc(Long idReserva);
 }

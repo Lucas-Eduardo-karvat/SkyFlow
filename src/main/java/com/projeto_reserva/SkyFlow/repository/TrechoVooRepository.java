@@ -10,4 +10,5 @@ public interface TrechoVooRepository extends JpaRepository<TrechoVoo, Long> {
     List<TrechoVoo> findByVooId(Long idVoo);
     List<TrechoVoo> findByAeroportoOrigemId(Long idAeroporto);
     List<TrechoVoo> findByAeroportoDestinoId(Long idAeroporto);
+    List<TrechoVoo> findByVooIdOrderByOrdemTrechoAsc(Long idVoo);
 }

@@ -9,5 +9,5 @@ import java.util.Optional;
 @Repository
 public interface TarifaRepository extends JpaRepository<Tarifa, Long> {
     List<Tarifa> findByVooId(Long idVoo);
-    Optional<Tarifa> findByVooIdAndClasseId(Long idVoo, Long idClasse);
+    Optional<Tarifa> findByVooIdAndTipoClasseId(Long idVoo, Long idClasse);
 }

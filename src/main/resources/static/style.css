@@ -1,0 +1,46 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: sans-serif;
+    background: #f0f0f0;
+    padding: 40px;
+}
+
+h1 {
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.container {
+    display: flex;
+    gap: 20px;
+}
+
+.grupo {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+label {
+    font-weight: bold;
+    color: #555;
+}
+
+select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    width: 200px;
+    cursor: pointer;
+}
+
+select:disabled {
+    background: #e0e0e0;
+    cursor: not-allowed;
+}

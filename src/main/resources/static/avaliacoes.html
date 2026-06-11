@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkyFlow - Avaliações de Voos</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* ── Estilos exclusivos da página de avaliações ── */
+        .badge {
+            background: var(--accent); color: #fff;
+            font-size: 11px; font-weight: 700; padding: 3px 9px;
+            border-radius: 20px; letter-spacing: .5px; margin-left: 8px;
+        }
+        .grid-2 {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 28px; margin-bottom: 36px;
+        }
+        @media(max-width: 820px) { .grid-2 { grid-template-columns: 1fr; } }
+
+        .card {
+            background: var(--card-bg); border: 1px solid var(--border-color);
+            border-radius: 16px; box-shadow: var(--shadow); overflow: hidden;
+        }
+        .card .card-header {
+            background: #f8fafc; padding: 20px 28px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex; align-items: center;
+        }
+        .card .card-body { padding: 28px; }
+
+        .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 18px; }
+        .form-group label {
+            font-weight: 700; font-size: 11px;
+            color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;
+        }
+        .form-group input,
+        .form-group textarea {
+            padding: 13px 15px; border: 2px solid var(--border-color);
+            border-radius: 10px; font-size: 15px; color: var(--text-main);
+            background: #fff; outline: none; font-family: inherit;
+            transition: border-color .2s, box-shadow .2s;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(139,92,246,.15);
+        }
+        .form-group textarea { resize: vertical; min-height: 90px; }
+
+        .stars-wrapper { display: flex; gap: 6px; margin-top: 4px; }
+        .star {
+            font-size: 34px; cursor: pointer;
+            color: #d1d5db; transition: color .15s, transform .1s;
+            user-select: none; line-height: 1;
+        }
+        .star.active { color: #f59e0b; }
+        .star.hover  { color: #f59e0b; transform: scale(1.18); }
+
+        .btn-primary {
+            width: 100%; padding: 14px;
+            background: linear-gradient(135deg, var(--accent) 0%, #7c3aed 100%);
+            color: #fff; border: none; border-radius: 10px;
+            font-size: 15px; font-weight: 700; cursor: pointer;
+            transition: opacity .2s, transform .1s; margin-top: 6px;
+        }
+        .btn-primary:hover   { opacity: .9; }
+        .btn-primary:active  { transform: scale(.98); }
+        .btn-primary:disabled { opacity: .5; cursor: not-allowed; }
+
+        .toast {
+            display: none; padding: 14px 20px; border-radius: 10px;
+            font-weight: 600; font-size: 14px; margin-top: 16px;
+        }
+        .toast.success { background:#dcfce7; color:#166534; border:1px solid #bbf7d0; display:block; }
+        .toast.error   { background:#fee2e2; color:#991b1b; border:1px solid #fecaca; display:block; }
+
+        /* Lista de avaliações */
+        .review-list { display: flex; flex-direction: column; gap: 14px; }
+        .review-item {
+            background: #f8fafc; border: 1px solid var(--border-color);
+            border-radius: 12px; padding: 16px 20px;
+        }
+        .review-top {
+            display: flex; justify-content: space-between;
+            align-items: flex-start; margin-bottom: 8px;
+        }
+        .review-company { font-weight: 800; font-size: 14px; color: var(--primary); }
+        .review-flight  { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+        .review-stars   { color: #f59e0b; font-size: 15px; letter-spacing: 1px; }
+        .review-comment { font-size: 14px; color: var(--text-muted); line-height: 1.5; }
+        .review-meta    { display: flex; gap: 12px; margin-top: 10px; font-size: 11px; color: #94a3b8; flex-wrap: wrap; }
+        .sentiment-pill {
+            padding: 2px 10px; border-radius: 20px;
+            font-size: 11px; font-weight: 700; text-transform: uppercase;
+        }
+        .pill-positivo { background:#dcfce7; color:#166534; }
+        .pill-neutro   { background:#fef9c3; color:#854d0e; }
+        .pill-negativo { background:#fee2e2; color:#991b1b; }
+
+        /* Painel de estatísticas */
+        .stats-card { margin-bottom: 0; }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 16px;
+        }
+        .stat-item {
+            background: #f8fafc; border: 1px solid var(--border-color);
+            border-radius: 12px; padding: 20px;
+            display: flex; flex-direction: column; gap: 10px;
+        }
+        .stat-company {
+            font-size: 16px; font-weight: 800; color: var(--primary);
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .nota-badge {
+            font-size: 13px; font-weight: 700; padding: 4px 10px;
+            border-radius: 20px; background: var(--accent); color: #fff;
+        }
+        .stat-row {
+            display: flex; justify-content: space-between;
+            font-size: 13px; color: var(--text-muted);
+        }
+        .stat-row span:last-child { font-weight: 700; color: var(--text-main); }
+        .sentiment-bar {
+            display: flex; height: 6px; border-radius: 3px;
+            overflow: hidden; margin-top: 4px;
+        }
+        .bar-pos { background: #22c55e; }
+        .bar-neu { background: #f59e0b; }
+        .bar-neg { background: #ef4444; }
+        .sentiment-legend { display: flex; gap: 12px; font-size: 11px; margin-top: 4px; }
+        .dot {
+            width: 8px; height: 8px; border-radius: 50%;
+            display: inline-block; margin-right: 3px;
+        }
+
+        .empty-state { text-align: center; padding: 40px 20px; color: var(--text-muted); }
+        .empty-state .icon { font-size: 40px; margin-bottom: 12px; }
+        .loading { text-align: center; padding: 30px; color: var(--text-muted); font-size: 14px; }
+    </style>
+</head>
+<body>
+
+<header class="main-header">
+    <div class="header-container">
+        <div class="logo">Sky<span>Flow</span></div>
+        <nav class="navigation">
+            <ul>
+                <li><a href="index.html">Início</a></li>
+                <li><a href="#">Voos</a></li>
+                <li><a href="#">Aeroportos</a></li>
+                <li><a href="avaliacoes.html" class="active">Avaliações</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main class="content-wrapper">
+
+    <section class="hero-section">
+        <h1>Avaliações de Voos</h1>
+        <p>Compartilhe sua experiência. Dados salvos no MongoDB via Aggregation Pipeline.</p>
+    </section>
+
+    <!-- Grade: Formulário + Recentes -->
+    <div class="grid-2">
+
+        <!-- FORMULÁRIO -->
+        <div class="card">
+            <div class="card-header">
+                <h2>Nova Avaliação</h2>
+                <span class="badge">MongoDB</span>
+            </div>
+            <div class="card-body">
+
+                <div class="form-group">
+                    <label>Voo</label>
+                    <select id="selectVoo" style="padding:13px 15px; border:2px solid var(--border-color); border-radius:10px; font-size:15px; color:var(--text-main); background:#fff; outline:none; font-family:inherit; transition:border-color .2s, box-shadow .2s; width:100%; cursor:pointer;">
+                        <option value="">Carregando voos...</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Companhia</label>
+                    <input type="text" id="inputCompanhia" readonly
+                           style="background:#f8fafc; cursor:default;"
+                           placeholder="Preenchido ao selecionar o voo">
+                </div>
+
+                <div class="form-group">
+                    <label>Seu Nome (opcional)</label>
+                    <input type="text" id="inputNome" placeholder="Ex: João Silva">
+                </div>
+
+                <div class="form-group">
+                    <label>Nota</label>
+                    <div class="stars-wrapper" id="starsWrapper">
+                        <span class="star" data-valor="1">★</span>
+                        <span class="star" data-valor="2">★</span>
+                        <span class="star" data-valor="3">★</span>
+                        <span class="star" data-valor="4">★</span>
+                        <span class="star" data-valor="5">★</span>
+                    </div>
+                    <input type="hidden" id="inputNota" value="">
+                </div>
+
+                <div class="form-group">
+                    <label>Comentário</label>
+                    <textarea id="inputComentario" placeholder="Descreva sua experiência no voo..."></textarea>
+                </div>
+
+                <button class="btn-primary" id="btnEnviar" onclick="enviarAvaliacao()">
+                    ✈ Enviar Avaliação
+                </button>
+                <div id="toastFeedback" class="toast"></div>
+
+            </div>
+        </div>
+
+        <!-- AVALIAÇÕES RECENTES -->
+        <div class="card">
+            <div class="card-header">
+                <h2>Avaliações Recentes</h2>
+                <span class="badge" id="badgeTotal">0</span>
+            </div>
+            <div class="card-body">
+                <div id="listaAvaliacoes">
+                    <div class="loading">⏳ Carregando avaliações...</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ESTATÍSTICAS — AGGREGATION PIPELINE -->
+    <div class="card stats-card">
+        <div class="card-header">
+            <h2>Estatísticas por Companhia</h2>
+            <span class="badge">Aggregation Pipeline</span>
+        </div>
+        <div class="card-body">
+            <p style="color:var(--text-muted); font-size:13px; margin-bottom:20px;">
+                Resultado do <strong>Aggregation Pipeline MongoDB</strong>:
+                <code style="background:#f1f5f9; padding:2px 7px; border-radius:4px; font-size:12px;">
+                    $group → $sort → $project
+                </code>
+                — nota média, total de avaliações e classificação de sentimento por companhia.
+            </p>
+            <div id="statsGrid" class="stats-grid">
+                <div class="loading">⏳ Executando pipeline...</div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<footer class="main-footer">
+    <div class="footer-container">
+        <p>&copy; 2026 SkyFlow Linhas Aéreas. Todos os direitos reservados.</p>
+        <p class="footer-sub">Módulo de Avaliações — NoSQL MongoDB</p>
+    </div>
+</footer>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// CONFIGURAÇÃO DA API
+//
+// Detecta automaticamente de onde a página está sendo servida:
+//   → Porta 8081 (Spring Boot) : usa caminho relativo  → sem CORS
+//   → Outra porta (Live Server): aponta para :8081     → CORS liberado no backend
+// ═══════════════════════════════════════════════════════════════
+const SPRING_PORT = '8081';
+const API_BASE    = window.location.port === SPRING_PORT
+    ? ''
+    : `http://localhost:${SPRING_PORT}`;
+
+const API_AVALIACOES = `${API_BASE}/avaliacoes`;
+const API_VOOS       = `${API_BASE}/voos`;
+
+let notaSelecionada = 0;
+
+// ───────────────────────────────────────────────────────────────
+// INICIALIZAÇÃO
+// ───────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+    inicializarEstrelas();
+    carregarVoos();
+    carregarAvaliacoes();
+    carregarEstatisticas();
+});
+
+// ───────────────────────────────────────────────────────────────
+// CARREGAR VOOS DO POSTGRESQL
+// ───────────────────────────────────────────────────────────────
+async function carregarVoos() {
+    const sel = document.getElementById('selectVoo');
+    try {
+        const resp = await fetch(API_VOOS);
+        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+        const voos = await resp.json();
+        sel.innerHTML = '<option value="">Selecione um voo</option>';
+        voos.forEach(v => {
+            const opt = document.createElement('option');
+            opt.value = JSON.stringify({
+                id:        v.id,
+                codigo:    v.codigoVoo,
+                companhia: v.companhia?.nome || ''
+            });
+            opt.textContent = `${v.codigoVoo} — ${v.companhia?.nome || 'Companhia'}`;
+            sel.appendChild(opt);
+        });
+    } catch (_) {
+        // Fallback com dados de exemplo enquanto a API de voos não existe
+        sel.innerHTML = `
+            <option value="">Selecione um voo</option>
+            <option value='{"id":1,"codigo":"AD1234","companhia":"Azul"}'>AD1234 — Azul</option>
+            <option value='{"id":2,"codigo":"LA5678","companhia":"LATAM"}'>LA5678 — LATAM</option>
+            <option value='{"id":3,"codigo":"G31001","companhia":"Gol"}'>G31001 — Gol</option>
+            <option value='{"id":4,"codigo":"AD9010","companhia":"Azul"}'>AD9010 — Azul</option>
+        `;
+    }
+    // Preenche companhia ao mudar seleção
+    sel.addEventListener('change', function () {
+        document.getElementById('inputCompanhia').value = '';
+        if (!this.value) return;
+        try {
+            document.getElementById('inputCompanhia').value = JSON.parse(this.value).companhia || '';
+        } catch (_) {}
+    });
+}
+
+// ───────────────────────────────────────────────────────────────
+// ESTRELAS INTERATIVAS
+// ───────────────────────────────────────────────────────────────
+function inicializarEstrelas() {
+    const stars = document.querySelectorAll('.star');
+    stars.forEach(star => {
+        star.addEventListener('mouseenter', () => {
+            const v = parseInt(star.dataset.valor);
+            stars.forEach(s => {
+                s.classList.remove('active');
+                s.classList.toggle('hover', parseInt(s.dataset.valor) <= v);
+            });
+        });
+        star.addEventListener('mouseleave', () => {
+            stars.forEach(s => {
+                s.classList.remove('hover');
+                s.classList.toggle('active', parseInt(s.dataset.valor) <= notaSelecionada);
+            });
+        });
+        star.addEventListener('click', () => {
+            notaSelecionada = parseInt(star.dataset.valor);
+            document.getElementById('inputNota').value = notaSelecionada;
+            stars.forEach(s => {
+                s.classList.remove('hover');
+                s.classList.toggle('active', parseInt(s.dataset.valor) <= notaSelecionada);
+            });
+        });
+    });
+}
+
+// ───────────────────────────────────────────────────────────────
+// ENVIAR AVALIAÇÃO → POST /avaliacoes  (salva no MongoDB)
+// ───────────────────────────────────────────────────────────────
+async function enviarAvaliacao() {
+    const vooRaw   = document.getElementById('selectVoo').value;
+    const nota     = parseInt(document.getElementById('inputNota').value);
+    const comentario = document.getElementById('inputComentario').value.trim();
+    const nome     = document.getElementById('inputNome').value.trim();
+    const companhia = document.getElementById('inputCompanhia').value.trim();
+
+    if (!vooRaw)   return mostrarToast('⚠ Selecione um voo.', 'error');
+    if (!nota)     return mostrarToast('⚠ Selecione uma nota (1 a 5 estrelas).', 'error');
+    if (!companhia) return mostrarToast('⚠ Companhia não identificada.', 'error');
+
+    let voo;
+    try { voo = JSON.parse(vooRaw); }
+    catch (_) { return mostrarToast('⚠ Voo inválido.', 'error'); }
+
+    // Payload conforme AvaliacaoRequestDTO.java
+    const payload = {
+        vooId:          voo.id,
+        codigoVoo:      voo.codigo,
+        companhia:      companhia,
+        nota:           nota,
+        comentario:     comentario || null,
+        nomePassageiro: nome || null
+    };
+
+    const btn = document.getElementById('btnEnviar');
+    btn.disabled = true;
+    btn.textContent = '⏳ Enviando...';
+
+    try {
+        const resp = await fetch(API_AVALIACOES, {
+            method:  'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body:    JSON.stringify(payload)
+        });
+        if (!resp.ok) {
+            const err = await resp.json().catch(() => ({ message: `HTTP ${resp.status}` }));
+            throw new Error(err.message || `HTTP ${resp.status}`);
+        }
+        mostrarToast('✅ Avaliação salva no MongoDB com sucesso!', 'success');
+        limparFormulario();
+        carregarAvaliacoes();
+        carregarEstatisticas();
+    } catch (err) {
+        mostrarToast(`❌ Erro: ${err.message}`, 'error');
+        console.error('[SkyFlow] Erro ao enviar avaliação:', err);
+    } finally {
+        btn.disabled = false;
+        btn.textContent = '✈ Enviar Avaliação';
+    }
+}
+
+// ───────────────────────────────────────────────────────────────
+// LISTAR AVALIAÇÕES → GET /avaliacoes
+// ───────────────────────────────────────────────────────────────
+async function carregarAvaliacoes() {
+    const container = document.getElementById('listaAvaliacoes');
+    container.innerHTML = '<div class="loading">⏳ Carregando...</div>';
+    try {
+        const resp = await fetch(API_AVALIACOES);
+        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+        const lista = await resp.json();
+
+        document.getElementById('badgeTotal').textContent = lista.length;
+
+        if (lista.length === 0) {
+            container.innerHTML = `
+                <div class="empty-state">
+                    <div class="icon">✈</div>
+                    <p>Nenhuma avaliação ainda. Seja o primeiro!</p>
+                </div>`;
+            return;
+        }
+        const recentes = lista.slice(-10).reverse();
+        container.innerHTML = `<div class="review-list">${recentes.map(renderAvaliacao).join('')}</div>`;
+    } catch (err) {
+        container.innerHTML = `
+            <div class="empty-state">
+                <p>⚠ Não foi possível carregar: ${err.message}</p>
+                <p style="font-size:12px;margin-top:8px;">Verifique se o Spring Boot está rodando na porta ${SPRING_PORT}.</p>
+            </div>`;
+    }
+}
+
+function renderAvaliacao(av) {
+    const estrelas  = '★'.repeat(av.nota) + '☆'.repeat(5 - av.nota);
+    const data      = av.data ? new Date(av.data + 'T00:00:00').toLocaleDateString('pt-BR') : '';
+    return `
+    <div class="review-item">
+        <div class="review-top">
+            <div>
+                <div class="review-company">${av.companhia}</div>
+                <div class="review-flight">Voo ${av.codigoVoo}</div>
+            </div>
+            <div class="review-stars">${estrelas}</div>
+        </div>
+        ${av.comentario ? `<div class="review-comment">"${av.comentario}"</div>` : ''}
+        <div class="review-meta">
+            <span class="sentiment-pill pill-${av.sentimento}">${av.sentimento}</span>
+            ${av.nomePassageiro ? `<span>👤 ${av.nomePassageiro}</span>` : ''}
+            ${data ? `<span>📅 ${data}</span>` : ''}
+        </div>
+    </div>`;
+}
+
+// ───────────────────────────────────────────────────────────────
+// ESTATÍSTICAS → GET /avaliacoes/estatisticas  (Aggregation Pipeline)
+// ───────────────────────────────────────────────────────────────
+async function carregarEstatisticas() {
+    const container = document.getElementById('statsGrid');
+    container.innerHTML = '<div class="loading">⏳ Executando pipeline...</div>';
+    try {
+        const resp = await fetch(`${API_AVALIACOES}/estatisticas`);
+        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+        const stats = await resp.json();
+
+        if (stats.length === 0) {
+            container.innerHTML = `
+                <div class="empty-state">
+                    <div class="icon">📊</div>
+                    <p>Nenhuma estatística disponível. Adicione avaliações primeiro.</p>
+                </div>`;
+            return;
+        }
+        container.innerHTML = stats.map(renderStatCard).join('');
+    } catch (err) {
+        container.innerHTML = `<div class="empty-state"><p>⚠ Pipeline indisponível: ${err.message}</p></div>`;
+    }
+}
+
+function renderStatCard(stat) {
+    const total = stat.totalAvaliacoes || 0;
+    const pct   = n => total > 0 ? Math.round((n / total) * 100) : 0;
+    const pPos  = pct(stat.positivoCount || 0);
+    const pNeu  = pct(stat.neutroCount   || 0);
+    const pNeg  = pct(stat.negativoCount || 0);
+    const media = stat.notaMedia != null ? Number(stat.notaMedia).toFixed(2) : '–';
+    return `
+    <div class="stat-item">
+        <div class="stat-company">
+            ${stat.companhia}
+            <span class="nota-badge">★ ${media}</span>
+        </div>
+        <div class="stat-row"><span>Total de avaliações</span><span>${total}</span></div>
+        <div class="stat-row">
+            <span>Positivas</span>
+            <span style="color:#22c55e">${stat.positivoCount || 0} (${pPos}%)</span>
+        </div>
+        <div class="stat-row">
+            <span>Neutras</span>
+            <span style="color:#f59e0b">${stat.neutroCount || 0} (${pNeu}%)</span>
+        </div>
+        <div class="stat-row">
+            <span>Negativas</span>
+            <span style="color:#ef4444">${stat.negativoCount || 0} (${pNeg}%)</span>
+        </div>
+        <div class="sentiment-bar">
+            <div class="bar-pos" style="width:${pPos}%"></div>
+            <div class="bar-neu" style="width:${pNeu}%"></div>
+            <div class="bar-neg" style="width:${pNeg}%"></div>
+        </div>
+        <div class="sentiment-legend">
+            <span><span class="dot" style="background:#22c55e"></span>Positivo</span>
+            <span><span class="dot" style="background:#f59e0b"></span>Neutro</span>
+            <span><span class="dot" style="background:#ef4444"></span>Negativo</span>
+        </div>
+    </div>`;
+}
+
+// ───────────────────────────────────────────────────────────────
+// UTILITÁRIOS
+// ───────────────────────────────────────────────────────────────
+function mostrarToast(msg, tipo) {
+    const t = document.getElementById('toastFeedback');
+    t.textContent = msg;
+    t.className   = `toast ${tipo}`;
+    clearTimeout(t._t);
+    t._t = setTimeout(() => { t.className = 'toast'; }, 5000);
+}
+function limparFormulario() {
+    document.getElementById('selectVoo').value        = '';
+    document.getElementById('inputCompanhia').value   = '';
+    document.getElementById('inputNome').value        = '';
+    document.getElementById('inputComentario').value  = '';
+    document.getElementById('inputNota').value        = '';
+    notaSelecionada = 0;
+    document.querySelectorAll('.star').forEach(s => s.classList.remove('active','hover'));
+}
+</script>
+
+</body>
+</html>

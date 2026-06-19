@@ -1,0 +1,23 @@
+body{
+
+    background-color:#f4f6f9;
+
+}
+
+h1{
+
+    font-weight:bold;
+
+}
+
+.card{
+
+    border-radius:12px;
+
+}
+
+.table td{
+
+    vertical-align:middle;
+
+}

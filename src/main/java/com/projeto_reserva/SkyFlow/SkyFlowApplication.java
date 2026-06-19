@@ -8,6 +8,7 @@ public class SkyFlowApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SkyFlowApplication.class, args);
+
 	}
 
 }

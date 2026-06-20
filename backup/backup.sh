@@ -1,7 +1,11 @@
 #!/bin/bash
 
-pg_dump -U postgres -d skyflow_db > backup_skyflow.sql
+sudo -u postgres pg_dump -d skyflow_db > backup_skyflow.sql
 
-echo "Backup realizado com sucesso!"
+if [ $? -eq 0 ]; then
+    echo "Backup realizado com sucesso!"
+else
+    echo "Erro ao realizar backup!"
+fi
 # para dar permisao "chmod +x backup.sh"
 #para executar é so fazer "./backup.sh"

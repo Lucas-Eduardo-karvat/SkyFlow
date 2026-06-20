@@ -1,12 +1,5 @@
--- ==========================================================
--- PROJETO - SISTEMA DE RESERVA DE PASSAGENS AÉREAS
--- Exemplos de Transações
--- ==========================================================
 
--- ==========================================================
--- 1. TRANSAÇÃO SIMPLES
--- Cadastro de um passageiro
--- ==========================================================
+-- Transação 1 - Cadastro de passageiro
 
 BEGIN;
 
@@ -25,10 +18,7 @@ VALUES (
 
 COMMIT;
 
--- ==========================================================
--- 2. TRANSAÇÃO COM SAVEPOINT
--- Caso ocorra erro, apenas parte da transação é desfeita
--- ==========================================================
+-- Transação 2 - Uso de Savepoint
 
 BEGIN;
 
@@ -47,8 +37,6 @@ VALUES (
 
 SAVEPOINT sp_passageiro;
 
--- Este INSERT pode gerar erro caso o CPF já exista
-
 INSERT INTO passageiros (
     nome,
     cpf,
@@ -66,10 +54,7 @@ ROLLBACK TO SAVEPOINT sp_passageiro;
 
 COMMIT;
 
--- ==========================================================
--- 3. TRANSAÇÃO COM REPEATABLE READ
--- Garante que as leituras permaneçam consistentes
--- ==========================================================
+-- Transação 3 - Isolamento Repeatable Read
 
 BEGIN;
 
@@ -83,10 +68,7 @@ FROM reservas;
 
 COMMIT;
 
--- ==========================================================
--- 4. RESERVA DE ASSENTO
--- Atualiza duas tabelas na mesma transação
--- ==========================================================
+-- Transação 4 - Reserva de assento
 
 BEGIN;
 
@@ -107,19 +89,18 @@ SELECT
     'CONFIRMADA'
 FROM assentos
 WHERE voo_id = 1
-AND numero = 'E3';
+  AND numero = 'E3'
+  AND disponivel = true;
 
 UPDATE assentos
 SET disponivel = false
 WHERE voo_id = 1
-AND numero = 'E3';
+  AND numero = 'E3'
+  AND disponivel = true;
 
 COMMIT;
 
--- ==========================================================
--- 5. EXEMPLO DE ROLLBACK
--- Toda a operação é cancelada
--- ==========================================================
+-- Transação 5 - Exemplo de rollback
 
 BEGIN;
 
@@ -137,3 +118,4 @@ VALUES (
 );
 
 ROLLBACK;
+

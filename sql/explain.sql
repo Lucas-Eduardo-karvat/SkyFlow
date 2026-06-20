@@ -1,17 +1,13 @@
--- =====================================================
--- EXPLAIN - Busca de voos por origem e destino
--- =====================================================
+-- 1. Busca de voos por origem e destino
 
 EXPLAIN ANALYZE
 SELECT *
 FROM voos
-WHERE origem = 'GRU'
-  AND destino = 'GIG';
+WHERE origem_id = 1
+  AND destino_id = 2;
 
 
--- =====================================================
--- EXPLAIN - Busca por data do voo
--- =====================================================
+-- 2. Busca por data do voo
 
 EXPLAIN ANALYZE
 SELECT *
@@ -19,9 +15,7 @@ FROM voos
 WHERE data_partida >= CURRENT_DATE;
 
 
--- =====================================================
--- EXPLAIN - Busca de reservas por passageiro
--- =====================================================
+-- 3. Busca de reservas por passageiro
 
 EXPLAIN ANALYZE
 SELECT *
@@ -29,9 +23,7 @@ FROM reservas
 WHERE passageiro_id = 1;
 
 
--- =====================================================
--- EXPLAIN - Busca de assentos disponíveis
--- =====================================================
+-- 4. Busca de assentos disponíveis
 
 EXPLAIN ANALYZE
 SELECT *
@@ -40,9 +32,7 @@ WHERE voo_id = 1
   AND disponivel = true;
 
 
--- =====================================================
--- EXPLAIN - Consulta com JOIN
--- =====================================================
+-- 5. Consulta com JOIN
 
 EXPLAIN ANALYZE
 SELECT
@@ -54,3 +44,45 @@ JOIN passageiros p
     ON p.id = r.passageiro_id
 JOIN voos v
     ON v.id = r.voo_id;
+
+
+-- 6. Busca de reservas por voo
+
+EXPLAIN ANALYZE
+SELECT *
+FROM reservas
+WHERE voo_id = 1;
+
+
+-- 7. Busca de escalas de um voo
+
+EXPLAIN ANALYZE
+SELECT *
+FROM escalas
+WHERE voo_id = 1;
+
+
+-- 8. Busca de assentos por voo
+
+EXPLAIN ANALYZE
+SELECT *
+FROM assentos
+WHERE voo_id = 1;
+
+
+-- 9. Contagem de reservas por voo
+
+EXPLAIN ANALYZE
+SELECT
+    voo_id,
+    COUNT(*)
+FROM reservas
+GROUP BY voo_id;
+
+
+-- 10. Consulta de voos agendados
+
+EXPLAIN ANALYZE
+SELECT *
+FROM voos
+WHERE status = 'AGENDADO';

@@ -77,10 +77,31 @@ BEGIN
 END;
 
 $$;
-/*se precisar usar é algo tipo isso CALL reservar_assento(
-'XYZ123',
-1,
-2,
-35,
-650.00
-); */
+CREATE OR REPLACE PROCEDURE listar_reservas()
+LANGUAGE plpgsql
+AS $$
+DECLARE
+    r RECORD;
+
+    cur CURSOR FOR
+        SELECT localizador, status
+        FROM reservas;
+BEGIN
+
+    OPEN cur;
+
+    LOOP
+        FETCH cur INTO r;
+
+        EXIT WHEN NOT FOUND;
+
+        RAISE NOTICE 'Reserva: %, Status: %',
+            r.localizador,
+            r.status;
+
+    END LOOP;
+
+    CLOSE cur;
+
+END;
+$$;

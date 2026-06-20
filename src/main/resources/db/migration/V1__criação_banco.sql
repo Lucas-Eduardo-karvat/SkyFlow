@@ -1,6 +1,4 @@
--- ==========================================
--- COMPANHIAS AÉREAS
--- ==========================================
+-- Companhias aéreas
 
 CREATE TABLE companhias_aereas (
     id BIGSERIAL PRIMARY KEY,
@@ -10,9 +8,7 @@ CREATE TABLE companhias_aereas (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- ==========================================
--- AEROPORTOS
--- ==========================================
+-- Aeroportos
 
 CREATE TABLE aeroportos (
     id BIGSERIAL PRIMARY KEY,
@@ -24,9 +20,7 @@ CREATE TABLE aeroportos (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- ==========================================
--- AERONAVES
--- ==========================================
+-- Aeronaves
 
 CREATE TABLE aeronaves (
     id BIGSERIAL PRIMARY KEY,
@@ -41,9 +35,7 @@ CREATE TABLE aeronaves (
         REFERENCES companhias_aereas(id)
 );
 
--- ==========================================
--- VOOS
--- ==========================================
+-- Voos
 
 CREATE TABLE voos (
 
@@ -81,9 +73,7 @@ CREATE TABLE voos (
         REFERENCES aeronaves(id)
 );
 
--- ==========================================
--- ESCALAS
--- ==========================================
+-- Escalas
 
 CREATE TABLE escalas (
 
@@ -114,9 +104,7 @@ CREATE TABLE escalas (
         UNIQUE(voo_id,ordem)
 );
 
--- ==========================================
--- CLASSES
--- ==========================================
+-- Classes
 
 CREATE TABLE classes (
 
@@ -129,9 +117,7 @@ CREATE TABLE classes (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- ==========================================
--- ASSENTOS
--- ==========================================
+-- Assentos
 
 CREATE TABLE assentos (
 
@@ -163,9 +149,7 @@ CREATE TABLE assentos (
         UNIQUE(id,voo_id)
 );
 
--- ==========================================
--- PASSAGEIROS
--- ==========================================
+-- Passageiros
 
 CREATE TABLE passageiros (
 
@@ -182,9 +166,7 @@ CREATE TABLE passageiros (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- ==========================================
--- RESERVAS
--- ==========================================
+-- Reservas
 
 CREATE TABLE reservas (
 
@@ -227,9 +209,7 @@ CREATE TABLE reservas (
         UNIQUE(assento_id)
 );
 
--- ==========================================
--- HISTÓRICO DE RESERVAS
--- ==========================================
+-- Histórico de reservas
 
 CREATE TABLE historico_reservas (
 
